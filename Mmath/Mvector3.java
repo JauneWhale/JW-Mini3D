@@ -83,4 +83,19 @@ public class Mvector3 {
 		z /= w;
 		w = 1;
 	}
+	//Ë«ÏòÁ¿°æ
+	public Mvector3 Sadd(Mvector3 v){
+		float tx = x + v.x /v.w*w;
+		float ty = x + v.y /v.w*w;
+		float tz = x + v.z /v.w*w;
+		float tw = w;
+		return new Mvector3(tx,ty,tz,tw);
+	}
+	public Mvector3 Ssubtract(Mvector3 v){
+		float tx = x - v.x /v.w*w;
+		float ty = x - v.y /v.w*w;
+		float tz = x - v.z /v.w*w;
+		float tw = w;
+		return new Mvector3(tx,ty,tz,tw);
+	}
 }

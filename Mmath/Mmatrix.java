@@ -3,11 +3,21 @@ package Mmath;
 public class Mmatrix {
 	//int columns;//列向量
 	//int rows;//行向量
+	/**
+	 * 该矩阵表示的下标为：
+	 *  00 10 20 30
+	 *  01 11 21 31
+	 *  02 12 22 32
+	 *  03 13 23 33
+	 */
 	int n;
 	int size;
 	private float[] values;
 	public static final int DIMENSION2 = 3;
 	public static final int DIMENSION3 = 4;
+	public static final int TRANSLATE = 1;
+	public static final int SCALE = 2;
+	public static final int ROTATE = 3;
 	public Mmatrix(float[] values,int dimension){
 		this.n = dimension;
 		size = n*n;
@@ -29,6 +39,22 @@ public class Mmatrix {
 		this.values = new float[size];
 		this.Msetidentity();
 	}
+	/*
+	public Mmatrix(float x, float y, float z, int transform){
+		this.n = DIMENSION3;
+		size = n*n;
+		this.values = new float[size];
+		this.Msetidentity();
+		switch(transform){
+		case TRANSLATE:Mtranslate(); break;
+		case SCALE: break;
+		case ROTATE: break;
+		}
+	}*/
+	/**
+	 * 基本运算
+	 * @return
+	 */
 	public Mmatrix Mclone(){
 		return new Mmatrix(values, n);
 	}
@@ -74,8 +100,14 @@ public class Mmatrix {
 			this.values[i] *= f;
 		}
 	}
+	/**
+	 * 辅助类函数
+	 */
 	public float getValues(int col, int row){
 		return values[row*n + col];
+	}
+	public void setValues(int col, int row, float value){
+		values[row*n + col] = value;
 	}
 	public void Msetidentity(){
 		int i = 0;
@@ -89,5 +121,52 @@ public class Mmatrix {
 		for(int i = 0; i<size; i++){
 			values[i] = 0;
 		}
+	}
+	/**
+	 * 基本变换函数
+	 */
+	public void Mtranslate(float x, float y, float z){
+		this.Msetidentity();
+		this.setValues(3, 0, x);
+		this.setValues(3, 1, y);
+		this.setValues(3, 2, z);
+	}
+	public void Mscale(float x, float y, float z){
+		this.Msetidentity();
+		this.setValues(0, 0, x);
+		this.setValues(1, 1, y);
+		this.setValues(2, 2, z);
+	}
+	/**
+	 * Pay more attention to this
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param theta
+	 */
+	public void Mrotate(float x, float y, float z, float theta){
+		float qsin = (float)Math.sin(theta*0.5f);
+		float qcos = (float)Math.sin(theta*0.5f);
+		Mvector3 v = new Mvector3(x,y,z,1.0f);
+		x = v.x * qsin;
+		y = v.y * qsin;
+		z = v.z * qsin;
+		float w = qcos;
+		this.setValues(0, 0, 1 - 2*y*y - 2*z*z);
+		this.setValues(1, 0, 2*x*y - 2*w*z);
+		this.setValues(2, 0, 2*y*z + 2*w*y);
+		this.setValues(0, 1, 2*x*y + 2*w*z);
+		this.setValues(1, 1, 1 - 2*x*x - 2*z*z);
+		this.setValues(2, 1, 2*y*z - 2*w*x);
+		this.setValues(0, 2, 2*x*z - 2*w*y);
+		this.setValues(1, 2, 2*y*z + 2*w*x);
+		this.setValues(2, 2, 1 - 2*x*x - 2*y*y);
+		this.setValues(0, 3, 0);
+		this.setValues(1, 3, 0);
+		this.setValues(2, 3, 0);
+		this.setValues(3, 0, 0);
+		this.setValues(3, 1, 0);
+		this.setValues(3, 2, 0);
+		this.setValues(3, 3, 1);
 	}
 }
