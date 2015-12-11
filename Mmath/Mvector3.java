@@ -3,21 +3,21 @@ package Mmath;
 
 //一律以列向量来看待
 public class Mvector3 {
-	double x, y, z;
-	double w;
+	float x, y, z;
+	float w;
 	public Mvector3(int x, int y, int z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.w = 1;
 	}
-	public Mvector3(double x, double y, double z){
+	public Mvector3(float x, float y, float z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.w = 1;
 	}
-	public Mvector3(double x, double y, double z, double w){
+	public Mvector3(float x, float y, float z, float w){
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -30,10 +30,10 @@ public class Mvector3 {
 	public Mvector3 Mclone(){
 		return new Mvector3(x,y,z,w);
 	}
-	public double Mlength(){
-		return Math.sqrt(x*x+y*y+z*z)/w;
+	public float Mlength(){
+		return (float) (Math.sqrt(x*x+y*y+z*z)/w);
 	}
-	public double Msqlength(){
+	public float Msqlength(){
 		return (x*x+y*y+z*z)/(w*w);
 	}
 	public void Mnormalize(){
@@ -55,18 +55,18 @@ public class Mvector3 {
 		y -= v.y /v.w*w;
 		z -= v.z /v.w*w;
 	}
-	public void Mscale(double f){
+	public void Mscale(float f){
 		x*=f; y*=f; z*=f;
 	}
 	public void Mscale(int f){
 		x*=f; y*=f; z*=f;
 	}
-	public void Mdivide(double inv){
-		double f = 1/inv;
+	public void Mdivide(float inv){
+		float f = 1/inv;
 		x*=f; y*=f; z*=f;
 	}
 	//矢量点乘
-	public double Mdot(Mvector3 v){
+	public float Mdot(Mvector3 v){
 		return (this.x*v.x+this.y*v.y+this.z*v.z)/(this.w*w);
 	}
 	//矢量叉乘
