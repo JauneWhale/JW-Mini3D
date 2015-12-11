@@ -3,8 +3,8 @@ package Mmath;
 
 //一律以列向量来看待
 public class Mvector3 {
-	float x, y, z;
-	float w;
+	public float x, y, z;
+	public float w;
 	public Mvector3(int x, int y, int z){
 		this.x = x;
 		this.y = y;
@@ -82,20 +82,5 @@ public class Mvector3 {
 		y /= w;
 		z /= w;
 		w = 1;
-	}
-	//双向量版
-	public Mvector3 Sadd(Mvector3 v){
-		float tx = x + v.x /v.w*w;
-		float ty = x + v.y /v.w*w;
-		float tz = x + v.z /v.w*w;
-		float tw = w;
-		return new Mvector3(tx,ty,tz,tw);
-	}
-	public Mvector3 Ssubtract(Mvector3 v){
-		float tx = x - v.x /v.w*w;
-		float ty = x - v.y /v.w*w;
-		float tz = x - v.z /v.w*w;
-		float tw = w;
-		return new Mvector3(tx,ty,tz,tw);
 	}
 }
