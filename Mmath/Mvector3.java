@@ -1,57 +1,86 @@
 package Mmath;
 
 
-
+//一律以列向量来看待
 public class Mvector3 {
-	int x, y, z;
+	double x, y, z;
+	double w;
 	public Mvector3(int x, int y, int z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.w = 1;
+	}
+	public Mvector3(double x, double y, double z){
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.w = 1;
+	}
+	public Mvector3(double x, double y, double z, double w){
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.w = w;
 	}
 	public Mvector3(){
 		x = y = z = 0;
+		w = 1;
 	}
 	public Mvector3 Mclone(){
-		return new Mvector3(x,y,z);
+		return new Mvector3(x,y,z,w);
 	}
 	public double Mlength(){
-		return Math.sqrt(x*x+y*y+z*z);
+		return Math.sqrt(x*x+y*y+z*z)/w;
 	}
 	public double Msqlength(){
-		return (x*x+y*y+z*z);
+		return (x*x+y*y+z*z)/(w*w);
 	}
 	public void Mnormalize(){
 		x = (int) (x / Mlength());
 		y = (int) (x / Mlength());
 		z = (int) (x / Mlength());
+		w = 1;
 	}
 	public void Mnegative(){
 		x = -x; y = -y; z = -z;
 	}
 	public void Madd(Mvector3 v){
-		x += v.x; y += v.y; z += v.z;
+		x += v.x /v.w*w;
+		y += v.y /v.w*w;
+		z += v.z /v.w*w;
 	}
 	public void Msubtract(Mvector3 v){
-		x -= v.x; y -= v.y; z -= v.z;
+		x -= v.x /v.w*w;
+		y -= v.y /v.w*w;
+		z -= v.z /v.w*w;
 	}
-	public void Mmultiply(double f){
+	public void Mscale(double f){
 		x*=f; y*=f; z*=f;
 	}
-	public void Mmultiply(int f){
+	public void Mscale(int f){
 		x*=f; y*=f; z*=f;
 	}
 	public void Mdivide(double inv){
 		double f = 1/inv;
 		x*=f; y*=f; z*=f;
 	}
+	//矢量点乘
 	public double Mdot(Mvector3 v){
-		return (this.x*v.x+this.y*v.y+this.z*v.z);
+		return (this.x*v.x+this.y*v.y+this.z*v.z)/(this.w*w);
 	}
+	//矢量叉乘
 	public Mvector3 Mcross(Mvector3 v){
 		return new Mvector3(
 					-this.z * v.y + this.y * v.z,
 					 this.z * v.x - this.x * v.z, 
-					-this.y * v.x + this.x * v.y);
+					-this.y * v.x + this.x * v.y
+					);
+	}
+	public void Mreset(){
+		x /= w;
+		y /= w;
+		z /= w;
+		w = 1;
 	}
 }

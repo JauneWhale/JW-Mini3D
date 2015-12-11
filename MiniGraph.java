@@ -1,4 +1,4 @@
-
+import Mmath.*;
 
 public class MiniGraph {
 	int width;
@@ -17,10 +17,10 @@ public class MiniGraph {
         }
 	}
     private int getARGB( int r, int g, int b, int alpha) {
-    	r = (r>255)?255:r;
-    	g = (g>255)?255:g;
-    	b = (b>255)?255:b;
-    	alpha = (alpha>255)?255:alpha;
+    	r = Mbasic.Isinclude(r, 0, 255);
+    	g = Mbasic.Isinclude(g, 0, 255);
+    	b = Mbasic.Isinclude(b, 0, 255);
+    	alpha = Mbasic.Isinclude(alpha, 0, 255);
         return (alpha << 24) | (r << 16) | (g << 8) | b;
     }
     private int getARGB( double r, double g, double b, double alpha) {
